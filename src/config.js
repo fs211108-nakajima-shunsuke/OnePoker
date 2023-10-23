@@ -15,3 +15,5 @@ export const TRUMP_VALUE = [
   ];
   
 export const TRUMP_SUIT = ["♦️", "♥️", "♣️", "♠️"];
+
+export const BIGGEST_DOWN_NUMBER = 7;

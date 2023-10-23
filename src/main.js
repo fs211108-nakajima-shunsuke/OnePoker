@@ -1,5 +1,5 @@
 import { out } from "./util.js";
-import { TRUMP_SUIT, TRUMP_VALUE } from "./config.js";
+import { TRUMP_SUIT, TRUMP_VALUE, BIGGEST_DOWN_NUMBER } from "./config.js";
 
 out("こんちには、ゲームを開始します。");
 
@@ -31,20 +31,20 @@ const shuffleDeck = (deck) => {
 deck = shuffleDeck(deck);
 
 let you = {
-    name : 'あなた',
-    hand : []
+  name: "あなた",
+  hand: [],
 };
 
 let cpu = {
-    name : 'CPU',
-    hand : []
-}
+  name: "CPU",
+  hand: [],
+};
 
 const dealCard = (deck, player) => {
-    player.hand.push(deck[0]);
-    deck.splice(0, 1);
-    out(`${player.name}にカードを1枚配りました。`);
-    console.log('デッキ残:'+ deck.length);
+  player.hand.push(deck[0]);
+  deck.splice(0, 1);
+  out(`${player.name}にカードを1枚配りました。`);
+  console.log("デッキ残:" + deck.length);
 };
 
 dealCard(deck, you);
@@ -53,12 +53,71 @@ dealCard(deck, you);
 dealCard(deck, cpu);
 
 const showHand = (player) => {
-  out(`${player.name}の手札`)
-  for(let i=0; i<player.hand.length; i++){
+  let yourHandElement = document.getElementById("hand");
+  let handNameElement = document.createElement("p");
+  handNameElement.innerHTML = player.name + 'の手札';
+  yourHandElement.appendChild(handNameElement);
+  for (let i = 0; i < player.hand.length; i++) {
     let suit = player.hand[i].suit;
     let value = player.hand[i].value;
-    console.log(suit +'の'+ value);
+
+    let cardElement = document.createElement("p");
+    cardElement.textContent = suit + "の" + value;
+    yourHandElement.appendChild(cardElement);
+  }
+};
+const logHand = (player) => {
+  out(`${player.name}の手札`);
+  for (let i = 0; i < player.hand.length; i++) {
+    let suit = player.hand[i].suit;
+    let value = player.hand[i].value;
+    console.log(suit + "の" + value);
+  }
+};
+
+showHand(you);
+logHand(cpu);
+
+const showUpDown = (player) => {
+  const isUpNumber = (number) => {
+    if(number > BIGGEST_DOWN_NUMBER || number === 1){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  let upDownElement = document.getElementById('up-down');
+  let upDownNameElement = document.createElement('p');
+  upDownElement.textContent = player.name + 'のUP or DOWN・・・';
+  upDownElement.appendChild(upDownNameElement);
+  for (let i = 0; i < player.hand.length; i++) {
+    let value = player.hand[i].value;
+    let num = parseValueToNumber(value);
+    let newUpDownElement = document.createElement('p');
+    if(isUpNumber(num)){
+      newUpDownElement.textContent = 'UP';
+    } else {
+      newUpDownElement.textContent = 'DOWN';
+    }
+    upDownElement.appendChild(newUpDownElement);
   }
 }
 
-showHand(you);
+const parseValueToNumber = (value) =>{
+  switch(value){
+    case 'A' :
+      return 1;
+    case 'J' :
+      return 11;
+    case 'Q' :
+      return 12;
+    case 'K' :
+      return 13;
+    default :
+      return parseInt(value);
+  }
+  return 0;
+}
+
+showUpDown(cpu);
