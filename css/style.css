@@ -1,8 +1,30 @@
-#hand{
-    border : 0.1mm solid black;
-    
+body {
+  text-align: center;
 }
-#up-down{
-    border : 0.1mm solid black;
-    
+
+#hand {
+  border: 0.1mm solid black;
+}
+#up-down {
+  border: 0.1mm solid black;
+}
+
+.game-zone {
+  width: 80%;
+  margin: 0 10%;
+}
+
+.hand-zone {
+  display: flex;
+  justify-content: center;
+}
+
+.duel-zone {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.flex-item {
+  flex: 1;
 }

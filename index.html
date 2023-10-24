@@ -9,9 +9,16 @@
 </head>
 <body>
     <h1>One Poker</h1>
-    <div id="hand"></div>
-    <hr>
-    <div id="up-down"></div>
+    <div class="game-zone">
+        <div class="hand-zone">
+            <div id="hand" class="flex-item"></div>
+            <div id="up-down" class="flex-item"></div>
+        </div>
+        <div class="duel-zone">
+            <div id="you-selected-card" class="flex-item"></div>
+            <div id="cpu-selected-card" class="flex-item"></div>
+        </div>
+    </div>
     <script src="./src/main.js" type="module"></script>
 </body>
 </html>
