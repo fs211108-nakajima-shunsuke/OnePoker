@@ -56,17 +56,17 @@ let yourSelectCard = {};
 let cpuSelectCard = {};
 
 const decideYourCard = (card) => {
-  let selectCardEle = document.getElementById('you-selected-card');
+  let selectCardEle = document.getElementById("you-selected-card");
   selectCardEle.innerHTML = `${card.suit}の${card.value}`;
 };
 
 const decideCpuCard = (cpu) => {
-  if(cpu.hand[0].value > cpu.hand[1].value){
-    cpuSelectCard = {suit : cpu.hand[0].suit, value : cpu.hand[0].value};
+  if (cpu.hand[0].value > cpu.hand[1].value) {
+    cpuSelectCard = { suit: cpu.hand[0].suit, value: cpu.hand[0].value };
   } else {
-    cpuSelectCard = {suit : cpu.hand[1].suit, value : cpu.hand[1].value};
+    cpuSelectCard = { suit: cpu.hand[1].suit, value: cpu.hand[1].value };
   }
-  let selectCardEle = document.getElementById('cpu-selected-card');
+  let selectCardEle = document.getElementById("cpu-selected-card");
   selectCardEle.innerHTML = `${cpuSelectCard.suit}の${cpuSelectCard.value}`;
 };
 
@@ -82,7 +82,7 @@ const showHand = (player) => {
     let btn = document.createElement("button");
     btn.textContent = "選ぶ";
     btn.onclick = () => {
-      yourSelectCard = {suit , value};
+      yourSelectCard = { suit, value };
       decideYourCard(yourSelectCard);
       decideCpuCard(cpu);
     };
@@ -107,7 +107,7 @@ logHand(cpu);
 
 const showUpDown = (player) => {
   const isUpNumber = (number) => {
-    if (number > BIGGEST_DOWN_NUMBER || number === 1) {
+    if (number > BIGGEST_DOWN_NUMBER) {
       return true;
     } else {
       return false;
@@ -116,7 +116,7 @@ const showUpDown = (player) => {
 
   let upDownElement = document.getElementById("up-down");
   let upDownNameElement = document.createElement("p");
-  upDownNameElement.textContent = player.name + 'の手札';
+  upDownNameElement.textContent = player.name + "の手札";
   upDownElement.appendChild(upDownNameElement);
   for (let i = 0; i < player.hand.length; i++) {
     let value = player.hand[i].value;
@@ -134,7 +134,7 @@ const showUpDown = (player) => {
 const parseValueToNumber = (value) => {
   switch (value) {
     case "A":
-      return 1;
+      return 14;
     case "J":
       return 11;
     case "Q":
@@ -148,3 +148,30 @@ const parseValueToNumber = (value) => {
 };
 
 showUpDown(cpu);
+
+const resultDuel = (yourCard, cpuCard) => {
+  let yourValue = parseValueToNumber(yourCard.value);
+  let cpuValue = parseValueToNumber(cpuCard.value);
+  if (yourCard.value == "A" || cpuCard.value == "A") {
+    if (yourCard.value == "2") {
+      console.log("あなたの勝利(2でAを撃破）");
+      return;
+    }
+    if (cpuCard.value == "2") {
+      console.log("CPUの勝利(2でAを撃破）");
+      return;
+    }
+  }
+  if (yourValue > cpuValue) {
+    console.log("あなたの勝利");
+  } else if (yourValue < cpuValue) {
+    console.log("CPUの勝利");
+  } else {
+    console.log("引き分け");
+  }
+};
+
+const resultButton = document.getElementById("result-button");
+resultButton.onclick = () => {
+  resultDuel(yourSelectCard, cpuSelectCard);
+};
